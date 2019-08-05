@@ -5,10 +5,9 @@ In this tutorial we are going to build a YouTube Clone Application from Scratch 
 
 Setup:
 - move a copy of .env.sample to .env and paste your API-key
-- run ```yarn && yarn start``` to start the development server
+- run ```npm i && npm start``` to start the development server
 
 Covered topics:
-- (no) lifecycle methods
 - project structure
 - destructuring
 - state management (with hooks)
@@ -17,4 +16,4 @@ Covered topics:
 
 Suggested improvements:
 - you should use Material-UIs makeStyles() hook instead of styles-prop to style your components
-- probably more ...
+- implement mobile friendly UI
