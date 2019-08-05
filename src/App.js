@@ -2,9 +2,10 @@ import React, { useState } from "react";
 import { Grid } from "@material-ui/core";
 
 import { SearchBar, VideoList, VideoDetail } from "./components";
+
 import youtube from "./api/youtube";
 
-export function App() {
+export default () => {
   const [videos, setVideos] = useState([]);
   const [selectedVideo, setSelectedVideo] = useState(null);
 
@@ -27,14 +28,12 @@ export function App() {
   );
 
   async function handleSubmit(searchTerm) {
-    const {
-      data: { items: videos }
-    } = await youtube.get("search", {
+    const { data: { items: videos } } = await youtube.get("search", {
       params: {
         part: "snippet",
         maxResults: 5,
         key: process.env.REACT_APP_API_KEY,
-        q: searchTerm
+        q: searchTerm,
       }
     });
 

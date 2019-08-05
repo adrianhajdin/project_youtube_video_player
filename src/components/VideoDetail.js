@@ -2,13 +2,13 @@ import React from "react";
 
 import { Paper, Typography } from "@material-ui/core";
 
-export function VideoDetail({ video }) {
+export default ({ video }) => {
   if (!video) return <div>Loading...</div>;
 
   const videoSrc = `https://www.youtube.com/embed/${video.id.videoId}`;
 
   return (
-    <>
+    <React.Fragment>
       <Paper elevation={6} style={{ height: "70%" }}>
         <iframe
           frameBorder="0"
@@ -27,6 +27,6 @@ export function VideoDetail({ video }) {
         </Typography>
         <Typography variant="subtitle2">{video.snippet.description}</Typography>
       </Paper>
-    </>
+    </React.Fragment>
   );
 }
