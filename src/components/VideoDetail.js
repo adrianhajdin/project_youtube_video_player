@@ -2,10 +2,12 @@ import React from "react";
 
 import { Paper, Typography } from "@material-ui/core";
 
-export default ({ video }) => {
-  if (!video) return <div>Loading...</div>;
+// Explain destructuring...
+const VideoDetail = ({ video: { id: { videoId }, snippet: { title, channelTitle, description } } }) => {
+  // TODO - Spinner
+  if (!videoId) return <div>Loading...</div>;
 
-  const videoSrc = `https://www.youtube.com/embed/${video.id.videoId}`;
+  const videoSrc = `https://www.youtube.com/embed/${videoId}`;
 
   return (
     <React.Fragment>
@@ -20,13 +22,15 @@ export default ({ video }) => {
       </Paper>
       <Paper elevation={6} style={{ padding: "15px" }}>
         <Typography variant="h4">
-          {video.snippet.title} - {video.snippet.channelTitle}
+          {title} - {channelTitle}
         </Typography>
         <Typography variant="subtitle1">
-          {video.snippet.channelTitle}
+          {channelTitle}
         </Typography>
-        <Typography variant="subtitle2">{video.snippet.description}</Typography>
+        <Typography variant="subtitle2">{description}</Typography>
       </Paper>
     </React.Fragment>
   );
 }
+
+export default VideoDetail;

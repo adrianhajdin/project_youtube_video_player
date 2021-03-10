@@ -5,9 +5,9 @@ import { SearchBar, VideoList, VideoDetail } from "./components";
 
 import youtube from "./api/youtube";
 
-export default () => {
+const App = () => {
   const [videos, setVideos] = useState([]);
-  const [selectedVideo, setSelectedVideo] = useState(null);
+  const [selectedVideo, setSelectedVideo] = useState({ id: {}, snippet: {} });
 
   return (
     <Grid style={{ justifyContent: "center" }} container spacing={10}>
@@ -32,6 +32,7 @@ export default () => {
       params: {
         part: "snippet",
         maxResults: 5,
+        // TODO - add a new API key.
         key: process.env.REACT_APP_API_KEY,
         q: searchTerm,
       }
@@ -41,3 +42,5 @@ export default () => {
     setSelectedVideo(videos[0]);
   }
 }
+
+export default App;
