@@ -5,7 +5,11 @@ import { Typography, Card, CardContent, CardMedia } from '@mui/material';
 const VideoItem = ({ video, id }) => {
   return (
     <Link
-      to={`/video-details/${id}`}
+      to={
+        video?.snippet?.thumbnails?.high.url
+          ? `/video-details/${id}`
+          : `/video-details/cV2gBU6hKfY`
+      }
       style={{ textDecoration: 'none' }}
       onClick={() => window.scrollTo(0, 0)}
     >

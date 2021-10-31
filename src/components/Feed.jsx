@@ -53,6 +53,7 @@ const Feed = () => {
                 mt: 1,
                 ml: 1,
               }}
+              key={category?.id}
             >
               {category?.snippet?.title}
             </Button>
