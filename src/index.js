@@ -1,6 +1,14 @@
-import React from "react";
-import ReactDOM from "react-dom";
+import React from 'react';
+import ReactDOM from 'react-dom';
+import './index.css';
+import App from './App';
+import { StateContextProvider } from './contexts/StateContextProvider';
 
-import App from "./App";
-
-ReactDOM.render(<App />, document.querySelector("#root"));
+ReactDOM.render(
+  <React.StrictMode>
+    <StateContextProvider>
+      <App />
+    </StateContextProvider>
+  </React.StrictMode>,
+  document.getElementById('root')
+);

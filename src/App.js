@@ -1,46 +1,24 @@
-import React, { useState } from "react";
-import { Grid } from "@material-ui/core";
-
-import { SearchBar, VideoList, VideoDetail } from "./components";
-
-import youtube from "./api/youtube";
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import Feed from './components/Feed';
+import Navbar from './components/Navbar';
+import { Box } from '@mui/material';
+import VideoDetail from './components/VideoDetail';
+import SearchFeed from './components/SearchFeed';
+import './app.css';
 
 const App = () => {
-  const [videos, setVideos] = useState([]);
-  const [selectedVideo, setSelectedVideo] = useState({ id: {}, snippet: {} });
-
   return (
-    <Grid style={{ justifyContent: "center" }} container spacing={10}>
-      <Grid item xs={11}>
-        <Grid container spacing={10}>
-          <Grid item xs={12}>
-            <SearchBar onSubmit={handleSubmit} />
-          </Grid>
-          <Grid item xs={8}>
-            <VideoDetail video={selectedVideo} />
-          </Grid>
-          <Grid item xs={4}>
-            <VideoList videos={videos} onVideoSelect={setSelectedVideo} />
-          </Grid>
-        </Grid>
-      </Grid>
-    </Grid>
+    <Router>
+      <Box sx={{ p: 1 }}>
+        <Navbar />
+        <Switch>
+          <Route exact path='/' component={Feed} />
+          <Route path='/video-details/:id' component={VideoDetail} />
+          <Route path='/search' component={SearchFeed} />
+        </Switch>
+      </Box>
+    </Router>
   );
-
-  async function handleSubmit(searchTerm) {
-    const { data: { items: videos } } = await youtube.get("search", {
-      params: {
-        part: "snippet",
-        maxResults: 5,
-        // TODO - add a new API key.
-        key: process.env.REACT_APP_API_KEY,
-        q: searchTerm,
-      }
-    });
-
-    setVideos(videos);
-    setSelectedVideo(videos[0]);
-  }
-}
+};
 
 export default App;

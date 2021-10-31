@@ -1,0 +1,9 @@
+body,
+html {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+.categories::-webkit-scrollbar {
+  width: 8px !important;
+}
