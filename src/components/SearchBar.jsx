@@ -34,6 +34,8 @@ const SearchBar = () => {
         onChange={(e) => {
           if (e.target.value !== '') {
             setSearchTerm(e.target.value);
+          } else {
+            setSearchTerm('');
           }
         }}
       />
