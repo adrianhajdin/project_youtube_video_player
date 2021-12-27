@@ -32,9 +32,7 @@ const SearchBar = () => {
         placeholder='Search...'
         value={searchTerm}
         onChange={(e) => {
-          if (e.target.value !== '') {
-            setSearchTerm(e.target.value);
-          }
+          setSearchTerm(e.target.value);
         }}
       />
       <IconButton type='submit' sx={{ p: '10px' }} aria-label='search'>
