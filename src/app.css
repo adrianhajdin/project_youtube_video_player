@@ -13,6 +13,16 @@
   outline: none;
 }
 
+.related-videos-container {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  padding: 10px;
+}
+
 .search-bar:focus {
   border-color: black !important;
   outline: none !important;
@@ -69,12 +79,7 @@
   }
 
   .related-videos-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-    gap: 20px;
-    padding: 1px;
+    flex-direction: row;
   }
 }
 
