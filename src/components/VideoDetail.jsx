@@ -93,22 +93,6 @@ const VideoDetail = () => {
                       ).toLocaleString('en-US')}
                     </Typography>
                   </Typography>
-                  <Typography
-                    sx={{
-                      marginBottom: '5px',
-                      display: 'flex',
-                      justifyContent: 'flex-start',
-                      alignItems: 'center',
-                      gap: 1,
-                    }}
-                  >
-                    <ThumbDownAltOutlinedIcon />
-                    <Typography>
-                      {parseInt(
-                        videoDetail?.statistics?.dislikeCount
-                      ).toLocaleString('en-US')}
-                    </Typography>
-                  </Typography>
                 </Box>
               </Box>
             </Box>

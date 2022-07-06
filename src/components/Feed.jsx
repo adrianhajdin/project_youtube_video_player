@@ -4,30 +4,21 @@ import HorizontalScroll from 'react-scroll-horizontal';
 import { useStateContext } from '../contexts/StateContextProvider';
 import VideoItem from './VideoItem';
 import Loader from './Loader';
+import { categories } from '../categories';
 
 const Feed = () => {
-  const { fetchData, data, loading, results, fetchOtherData } =
-    useStateContext();
-  const [keyword, setKeyword] = useState();
+  const { fetchData, data, loading } = useStateContext();
+  const [category, setCategory] = useState('all');
 
   useEffect(() => {
-    if (keyword) {
-      fetchData(`search?part=snippet&q=${keyword}`);
-    } else {
-      fetchData(`videos?part=snippet&chart=mostPopular`);
-    }
+    fetchData(`search?part=snippet&q=${category}`);
 
-    fetchOtherData('videoCategories?part=snippet');
     document.title = 'U📺tube';
-  }, [keyword]);
+  }, [category]);
 
-  if (loading) {
-    return <Loader />;
-  }
   return (
     <Box>
       <Box
-        className='categories'
         sx={{
           display: 'flex',
           gap: 5,
@@ -38,24 +29,26 @@ const Feed = () => {
         }}
       >
         <HorizontalScroll reverseScroll={true}>
-          {results?.map((category) => (
+          {categories.map((item) => (
             <Button
-              className='category-button'
-              onClick={() => setKeyword(category.snippet.title)}
+              className='category-btn'
+              onClick={() => setCategory(item.title)}
               sx={{
                 width: '170px',
                 height: '50px',
-                background: '#F9F9F9',
+                background: item.title === category ? 'black' : '#F9F9F9',
                 borderRadius: 20,
-                color: 'black',
+                color: item.title === category ? 'white' : 'black',
                 cursor: 'pointer',
                 fontWeight: 600,
                 mt: 1,
                 ml: 1,
+                textTransform: 'capitalize',
               }}
-              key={category?.id}
+              key={item.title}
             >
-              {category?.snippet?.title}
+              {item.title}
+              {console.log(item.title === category, category, item.title)}
             </Button>
           ))}
         </HorizontalScroll>
@@ -71,7 +64,7 @@ const Feed = () => {
         }}
       >
         <Typography sx={{ fontSize: 25, fontWeight: 900, p: 3, pb: 1, pt: 0 }}>
-          {keyword || 'Recommended'} Videos
+          {category || 'Recommended'} Videos
         </Typography>
       </Box>
       <Box
@@ -84,13 +77,17 @@ const Feed = () => {
           p: 1,
         }}
       >
-        {data?.map((video) => (
-          <VideoItem
-            video={video}
-            id={(video.id.videoId && video.id.videoId) || video.id}
-            key={(video.id.videoId && video.id.videoId) || video.id}
-          />
-        ))}
+        {!loading ? (
+          data.map((video) => (
+            <VideoItem
+              video={video}
+              id={(video.id.videoId && video.id.videoId) || video.id}
+              key={(video.id.videoId && video.id.videoId) || video.id}
+            />
+          ))
+        ) : (
+          <Loader />
+        )}
       </Box>
     </Box>
   );

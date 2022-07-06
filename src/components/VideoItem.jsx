@@ -14,7 +14,6 @@ const VideoItem = ({ video, id }) => {
       onClick={() => window.scrollTo(0, 0)}
     >
       <Card
-        className='recipe-card'
         sx={{
           width: 400,
           height: 310,
