@@ -29,7 +29,7 @@ const VideoItem = ({ video, id }) => {
             'https://i.pinimg.com/474x/30/88/a3/3088a3ebaf713600adacd00397ee410d.jpg'
           }
           alt='green iguana'
-          sx={{ borderRadius: 2 }}
+          sx={{ borderRadius: { sm: 0, md: 2 } }}
         />
         <CardContent>
           <Typography sx={{ fontSize: 16, fontWeight: 600 }}>

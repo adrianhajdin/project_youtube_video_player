@@ -1,3 +1,16 @@
+::-webkit-scrollbar {
+  width: 2px;
+  height: 2px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgb(237, 237, 237);
+}
+
+::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
 .video-card {
   height: 700px !important;
   width: 1440px !important;
@@ -21,6 +34,10 @@
   align-items: center;
   gap: 20px;
   padding: 10px;
+}
+
+.scroll-horizontal {
+  overflow: hidden;
 }
 
 .search-bar:focus {
@@ -99,5 +116,9 @@
   .like-dislike {
     flex-direction: column;
     gap: 0px !important;
+  }
+
+  .scroll-horizontal {
+    overflow: auto !important;
   }
 }
