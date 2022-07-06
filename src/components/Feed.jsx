@@ -15,7 +15,7 @@ const Feed = () => {
 
     document.title = 'U📺tube';
   }, [category]);
-
+  console.log(data);
   return (
     <Box>
       <Box
@@ -48,7 +48,6 @@ const Feed = () => {
               key={item.title}
             >
               {item.title}
-              {console.log(item.title === category, category, item.title)}
             </Button>
           ))}
         </HorizontalScroll>

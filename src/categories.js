@@ -2,9 +2,7 @@ export const categories = [
   {
     title: 'all',
   },
-  {
-    title: 'javascript mastery',
-  },
+
   {
     title: 'react',
   },
