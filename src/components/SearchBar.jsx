@@ -11,8 +11,10 @@ const SearchBar = () => {
 
   const onhandleSubmit = (e) => {
     e.preventDefault();
-    history.push('/search');
-    fetchData(`search?part=snippet&q=${searchTerm}`);
+    if (searchTerm) {
+      history.push('/search');
+      fetchData(`search?part=snippet&q=${searchTerm}`);
+    }
   };
 
   return (
@@ -24,7 +26,7 @@ const SearchBar = () => {
         border: '1px solid #e3e3e3',
         pl: 2,
         boxShadow: 'none',
-        mr: '30px',
+        mr: 5,
       }}
     >
       <input
@@ -32,7 +34,7 @@ const SearchBar = () => {
         placeholder='Search...'
         value={searchTerm}
         onChange={(e) => {
-          if (e.target.value !== '') {
+          if (e.target.value) {
             setSearchTerm(e.target.value);
           }
         }}

@@ -65,7 +65,6 @@ const VideoDetail = () => {
                     ).toLocaleString('en-US')}{' '}
                     views
                   </Typography>
-                  {/* <Typography>{videoDetail?.snippet?.publishedAt}</Typography> */}
                 </Box>
 
                 <Box

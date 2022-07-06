@@ -17,13 +17,18 @@ const Navbar = () => {
         top: 0,
         left: 0,
         background: 'white',
-        gap: '10',
         width: '100%',
         zIndex: 100,
       }}
     >
       <Link to='/' style={{ textDecoration: 'none' }}>
-        <Typography sx={{ fontSize: 25, color: 'red', fontWeight: 800 }}>
+        <Typography
+          sx={{
+            fontSize: { md: '25px', sm: '20px' },
+            color: 'red',
+            fontWeight: 800,
+          }}
+        >
           U📺tube
         </Typography>
       </Link>
