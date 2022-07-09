@@ -1,15 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { Typography, Box } from '@mui/material';
-import { useParams } from 'react-router-dom';
-import ThumbDownAltOutlinedIcon from '@mui/icons-material/ThumbDownAltOutlined';
+import { Link, useParams } from 'react-router-dom';
 import ThumbUpAltOutlinedIcon from '@mui/icons-material/ThumbUpAltOutlined';
 import ReactPlayer from 'react-player';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+
 import { useStateContext } from '../contexts/StateContextProvider';
 import VideoItem from './VideoItem';
+import Loader from './Loader';
 
 const VideoDetail = () => {
   const { id } = useParams();
-  const { data, fetchData, fetchOtherData, results } = useStateContext();
+  const { data, fetchData, fetchOtherData, results, loading } =
+    useStateContext();
   const [videoDetail, setVideoDetail] = useState();
 
   useEffect(() => {
@@ -20,6 +23,7 @@ const VideoDetail = () => {
   useEffect(() => {
     setVideoDetail(results[0]);
   }, [results]);
+
 
   if (videoDetail?.snippet?.title) {
     document.title = videoDetail?.snippet?.title;
@@ -57,43 +61,42 @@ const VideoDetail = () => {
               <Typography sx={{ fontSize: 18, fontWeight: 600, p: 1.5 }}>
                 {videoDetail?.snippet?.title}
               </Typography>
-              <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                <Box sx={{ opacity: 0.7 }}>
-                  <Typography sx={{ marginBottom: '5px' }}>
-                    {parseInt(
-                      videoDetail?.statistics?.viewCount
-                    ).toLocaleString('en-US')}{' '}
-                    views
-                  </Typography>
-                </Box>
+              <Box
+                sx={{
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  gap: '40px',
+                }}
+              >
+                <Typography sx={{ marginBottom: '5px', opacity: 0.7 }}>
+                  {parseInt(videoDetail?.statistics?.viewCount).toLocaleString(
+                    'en-US'
+                  )}{' '}
+                  views
+                </Typography>
 
-                <Box
+                <Typography
                   sx={{
-                    opacity: 0.7,
                     display: 'flex',
-                    flexWrap: 'wrap',
-                    gap: 3,
+                    justifyContent: 'center',
+                    gap: '6px',
+                    opacity: 0.7,
                   }}
-                  className='like-dislike'
                 >
-                  <Typography
-                    sx={{
-                      marginBottom: '5px',
-                      display: 'flex',
-                      justifyContent: 'flex-start',
-                      alignItems: 'center',
-                      gap: 1,
-                    }}
-                  >
-                    <ThumbUpAltOutlinedIcon />
-                    <Typography>
-                      {parseInt(
-                        videoDetail?.statistics?.likeCount
-                      ).toLocaleString('en-US')}
-                    </Typography>
-                  </Typography>
-                </Box>
+                  <ThumbUpAltOutlinedIcon />
+                  {parseInt(videoDetail?.statistics?.likeCount).toLocaleString(
+                    'en-US'
+                  )}{' '}
+                </Typography>
               </Box>
+              <Link to={`/channel/${videoDetail?.snippet?.channelId}`}>
+                <Typography sx={{ fontSize: 20, fontWeight: 700, mx: 2 }}>
+                  {videoDetail?.snippet?.channelTitle}
+                  <CheckCircleIcon
+                    sx={{ fontSize: '12px', color: 'gray', ml: '5px' }}
+                  />
+                </Typography>
+              </Link>
             </Box>
           </Box>
           <Box
@@ -108,13 +111,17 @@ const VideoDetail = () => {
               Similar Videos
             </Typography>
             <Box className='related-videos-container'>
-              {data?.map((video) => (
-                <VideoItem
-                  video={video}
-                  id={(video.id.videoId && video.id.videoId) || video.id}
-                  key={(video.id.videoId && video.id.videoId) || video.id}
-                />
-              ))}
+              {!loading ? (
+                data?.map((video) => (
+                  <VideoItem
+                    video={video}
+                    id={(video.id.videoId && video.id.videoId) || video.id}
+                    key={(video.id.videoId && video.id.videoId) || video.id}
+                  />
+                ))
+              ) : (
+                <Loader />
+              )}
             </Box>
           </Box>
         </Box>

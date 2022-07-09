@@ -5,6 +5,7 @@ import { Box } from '@mui/material';
 import VideoDetail from './components/VideoDetail';
 import SearchFeed from './components/SearchFeed';
 import './app.css';
+import ChannelDetail from './components/ChannelDetail';
 
 const App = () => {
   return (
@@ -13,7 +14,8 @@ const App = () => {
         <Navbar />
         <Switch>
           <Route exact path='/' component={Feed} />
-          <Route path='/video-details/:id' component={VideoDetail} />
+          <Route path='/video/:id' component={VideoDetail} />
+          <Route path='/channel/:id' component={ChannelDetail} />
           <Route path='/search' component={SearchFeed} />
         </Switch>
       </Box>

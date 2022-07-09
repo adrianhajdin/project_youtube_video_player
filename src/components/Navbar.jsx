@@ -1,8 +1,8 @@
 import React from 'react';
-
 import { Typography, Box } from '@mui/material';
-import SearchBar from './SearchBar';
 import { Link } from 'react-router-dom';
+
+import SearchBar from './SearchBar';
 
 const Navbar = () => {
   return (

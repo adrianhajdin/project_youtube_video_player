@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Paper, IconButton } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
+
 import { useHistory } from 'react-router';
 import { useStateContext } from '../contexts/StateContextProvider';
 

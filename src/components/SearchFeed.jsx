@@ -1,15 +1,18 @@
 import React from 'react';
 import { Box } from '@mui/material';
+
 import VideoItem from './VideoItem';
 import { useStateContext } from '../contexts/StateContextProvider';
 import Loader from './Loader';
+import ChannelCard from './ChannelCard';
+import { Link } from 'react-router-dom';
 
 const SearchFeed = () => {
   const { data, loading } = useStateContext();
   document.title = 'U📺tube';
-  if (loading) {
-    return <Loader />;
-  }
+
+  if (loading) <Loader />;
+
   return (
     <Box
       sx={{
@@ -22,13 +25,18 @@ const SearchFeed = () => {
         mt: 10,
       }}
     >
-      {data.length !== 0 &&
-        data.map((video) => (
-          <VideoItem
-            key={video.id.videoId}
-            video={video}
-            id={video.id.videoId}
-          />
+      {
+        data.map((item, idx) => (
+          <Box key={idx}>
+            {item?.id?.videoId && (
+              <VideoItem video={item} id={item.id.videoId} />
+            ) }
+            {item?.id?.channelId && (
+              <Link to={`/channel/${item.id.channelId}`}>
+                <ChannelCard channelDetail={item} />
+              </Link>
+            )}
+          </Box>
         ))}
     </Box>
   );

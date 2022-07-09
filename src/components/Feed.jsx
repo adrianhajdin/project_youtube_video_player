@@ -1,21 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import { Box, Typography, Button } from '@mui/material';
 import HorizontalScroll from 'react-scroll-horizontal';
+
 import { useStateContext } from '../contexts/StateContextProvider';
 import VideoItem from './VideoItem';
 import Loader from './Loader';
 import { categories } from '../categories';
 
 const Feed = () => {
-  const { fetchData, data, loading } = useStateContext();
   const [category, setCategory] = useState('all');
+  const { fetchData, data, loading } = useStateContext();
 
   useEffect(() => {
     fetchData(`search?part=snippet&q=${category}`);
 
     document.title = 'U📺tube';
   }, [category]);
-  console.log(data);
+  
   return (
     <Box>
       <Box
