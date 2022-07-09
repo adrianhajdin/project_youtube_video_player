@@ -23,8 +23,9 @@ const Navbar = () => {
     >
       <Link to='/' style={{ textDecoration: 'none' }}>
         <Typography
+        
           sx={{
-            fontSize: { md: '25px', sm: '20px' },
+            fontSize: {sm: 20, md: '25px',marginTop:'13px' },
             color: 'red',
             fontWeight: 800,
           }}
