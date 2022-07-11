@@ -6,13 +6,11 @@ import ReactPlayer from 'react-player';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 
 import { useStateContext } from '../contexts/StateContextProvider';
-import VideoItem from './VideoItem';
-import Loader from './Loader';
+import { VideoItem, Loader } from './'
 
 const VideoDetail = () => {
   const { id } = useParams();
-  const { data, fetchData, fetchOtherData, results, loading } =
-    useStateContext();
+  const { data, fetchData, fetchOtherData, results, loading } = useStateContext();
   const [videoDetail, setVideoDetail] = useState();
 
   useEffect(() => {
@@ -24,40 +22,14 @@ const VideoDetail = () => {
     setVideoDetail(results[0]);
   }, [results]);
 
-
-  if (videoDetail?.snippet?.title) {
-    document.title = videoDetail?.snippet?.title;
-  }
   return (
     <>
       {videoDetail && (
-        <Box
-          className='video-detail-container'
-          sx={{
-            display: 'flex',
-            justifyContent: 'space-between',
-          }}
-        >
+        <Box className='video-detail-container' sx={{ display: 'flex', justifyContent: 'space-between' }}>
           <Box
-            sx={{
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              mt: 1,
-              pb: 1,
-              position: 'relative',
-              width: '100%',
-            }}
-          >
-            <Box
-              className='video-detail'
-              sx={{ position: 'fixed', top: '100px', left: '10px' }}
-            >
-              <ReactPlayer
-                className='video-card'
-                controls
-                url={`https://www.youtube.com/watch?v=${id}`}
-              />
+            sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', mt: 1, pb: 1, position: 'relative', width: '100%' }}>
+            <Box className='video-detail' sx={{ position: 'fixed', top: '100px', left: '10px' }}>
+              <ReactPlayer className='video-card' controls url={`https://www.youtube.com/watch?v=${id}`} />
               <Typography sx={{ fontSize: 18, fontWeight: 600, p: 1.5 }}>
                 {videoDetail?.snippet?.title}
               </Typography>
@@ -92,25 +64,13 @@ const VideoDetail = () => {
               <Link to={`/channel/${videoDetail?.snippet?.channelId}`}>
                 <Typography sx={{ fontSize: 20, fontWeight: 700, mx: 2 }}>
                   {videoDetail?.snippet?.channelTitle}
-                  <CheckCircleIcon
-                    sx={{ fontSize: '12px', color: 'gray', ml: '5px' }}
-                  />
+                  <CheckCircleIcon sx={{ fontSize: '12px', color: 'gray', ml: '5px' }} />
                 </Typography>
               </Link>
             </Box>
           </Box>
-          <Box
-            sx={{
-              mt: 10,
-            }}
-            className='related-videos'
-          >
-            <Typography
-              sx={{ fontSize: 25, fontWeight: 800, m: 2, textAlign: 'center' }}
-            >
-              Similar Videos
-            </Typography>
-            <Box className='related-videos-container'>
+          <Box sx={{ mt: 10, }} className='related-videos'>
+            <Box className='related-videos-container' sx={{ mt: 1.3 }}>
               {!loading ? (
                 data?.map((video) => (
                   <VideoItem

@@ -1,8 +1,8 @@
-import axios from 'axios';
 import React, { createContext, useContext, useState } from 'react';
+import axios from 'axios';
 
 const StateContext = createContext();
-const baseUrl = 'https://youtube-v31.p.rapidapi.com';
+const BASE_URL = 'https://youtube-v31.p.rapidapi.com';
 
 export const StateContextProvider = ({ children }) => {
   const [data, setData] = useState([]);
@@ -12,7 +12,8 @@ export const StateContextProvider = ({ children }) => {
   const fetchData = async (url) => {
     setLoading(true);
     setData([]);
-    const data = await axios.get(`${baseUrl}/${url}`, {
+    
+    const data = await axios.get(`${BASE_URL}/${url}`, {
       params: {
         maxResults: 50,
       },
@@ -27,7 +28,7 @@ export const StateContextProvider = ({ children }) => {
   };
 
   const fetchOtherData = async (url) => {
-    const data1 = await axios.get(`${baseUrl}/${url}`, {
+    const data1 = await axios.get(`${BASE_URL}/${url}`, {
       params: {
         maxResults: 50,
         regionCode: 'IN',
@@ -37,19 +38,12 @@ export const StateContextProvider = ({ children }) => {
         'X-RapidAPI-Host': 'youtube-v31.p.rapidapi.com',
       },
     });
+
     setResults(data1?.data?.items);
   };
 
   return (
-    <StateContext.Provider
-      value={{
-        fetchData,
-        fetchOtherData,
-        results,
-        data,
-        loading,
-      }}
-    >
+    <StateContext.Provider value={{ fetchData, fetchOtherData, results, data, loading }}>
       {children}
     </StateContext.Provider>
   );

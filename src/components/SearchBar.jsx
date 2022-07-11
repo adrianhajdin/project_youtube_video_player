@@ -7,13 +7,15 @@ import { useStateContext } from '../contexts/StateContextProvider';
 
 const SearchBar = () => {
   const [searchTerm, setSearchTerm] = useState('');
-  const history = useHistory();
   const { fetchData } = useStateContext();
+  const history = useHistory();
 
   const onhandleSubmit = (e) => {
     e.preventDefault();
+
     if (searchTerm) {
       history.push('/search');
+
       fetchData(`search?part=snippet&q=${searchTerm}`);
     }
   };
@@ -34,11 +36,7 @@ const SearchBar = () => {
         className='search-bar'
         placeholder='Search...'
         value={searchTerm}
-        onChange={(e) => {
-          if (e.target.value) {
-            setSearchTerm(e.target.value);
-          }
-        }}
+        onChange={(e) => setSearchTerm(e.target.value)}
       />
       <IconButton type='submit' sx={{ p: '10px' }} aria-label='search'>
         <SearchIcon />
