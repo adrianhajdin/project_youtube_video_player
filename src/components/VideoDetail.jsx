@@ -1,90 +1,85 @@
 import React, { useEffect, useState } from 'react';
-import { Typography, Box } from '@mui/material';
 import { Link, useParams } from 'react-router-dom';
-import ThumbUpAltOutlinedIcon from '@mui/icons-material/ThumbUpAltOutlined';
 import ReactPlayer from 'react-player';
+import { Typography, Box, Stack } from '@mui/material';
+import ThumbUpAltOutlinedIcon from '@mui/icons-material/ThumbUpAltOutlined';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 
-import { useStateContext } from '../contexts/StateContextProvider';
-import { VideoItem, Loader } from './'
+import { Videos, Loader } from './';
+import { axiosGetReq } from '../utils';
 
 const VideoDetail = () => {
+  const [videoDetail, setVideoDetail] = useState(null);
+  const [videos, setVideos] = useState(null);
+
   const { id } = useParams();
-  const { data, fetchData, fetchOtherData, results, loading } = useStateContext();
-  const [videoDetail, setVideoDetail] = useState();
 
   useEffect(() => {
-    fetchData(`search?part=snippet&relatedToVideoId=${id}&type=video`);
-    fetchOtherData(`videos?part=snippet,statistics&id=${id}`);
+    const fetchResults = async () => {
+      const data = await axiosGetReq(`videos?part=snippet,statistics&id=${id}`);
+      setVideoDetail(data.items[0]);
+
+      const videosData = await axiosGetReq(`search?part=snippet&relatedToVideoId=${id}&type=video`);
+      setVideos(videosData.items);
+    };
+
+    fetchResults();
   }, [id]);
 
-  useEffect(() => {
-    setVideoDetail(results[0]);
-  }, [results]);
+  if (!videos) <Loader />;
 
   return (
     <>
       {videoDetail && (
-        <Box className='video-detail-container' sx={{ display: 'flex', justifyContent: 'space-between' }}>
-          <Box
-            sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', mt: 1, pb: 1, position: 'relative', width: '100%' }}>
-            <Box className='video-detail' sx={{ position: 'fixed', top: '100px', left: '10px' }}>
-              <ReactPlayer className='video-card' controls url={`https://www.youtube.com/watch?v=${id}`} />
-              <Typography sx={{ fontSize: 18, fontWeight: 600, p: 1.5 }}>
+        <Stack direction={{ xs: 'column', md: 'row' }}>
+          <Box flex={1}>
+            <Box sx={{ width: '100%', position: 'sticky', top: '100px' }}>
+              <ReactPlayer
+                className='react-player'
+                controls
+                url={`https://www.youtube.com/watch?v=${id}`}
+              />
+              <Typography fontSize={18} fontWeight={500} p={1.5}>
                 {videoDetail?.snippet?.title}
               </Typography>
-              <Box
-                sx={{
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  gap: '40px',
-                }}
-              >
-                <Typography sx={{ marginBottom: '5px', opacity: 0.7 }}>
-                  {parseInt(videoDetail?.statistics?.viewCount).toLocaleString(
-                    'en-US'
-                  )}{' '}
-                  views
-                </Typography>
+              <Stack direction='row' justifyContent='space-between' gap='40px'>
+                <Link to={`/channel/${videoDetail?.snippet?.channelId}`}>
+                  <Typography fontSize={{md:20, xs:16}} fontWeight={600} mx={{md:2,xs:0}}>
+                    {videoDetail?.snippet?.channelTitle}
+                    <CheckCircleIcon
+                      sx={{ fontSize: '12px', color: 'gray', ml: '5px' }}
+                    />
+                  </Typography>
+                </Link>
+                <Stack direction='row' gap='20px' alignItems='center'>
+                  <Typography sx={{ opacity: 0.7, fontSize:{md:'16px', xs:'14px'} }}>
+                    {parseInt(
+                      videoDetail?.statistics?.viewCount
+                    ).toLocaleString('en-US')}{' '}
+                    views
+                  </Typography>
 
-                <Typography
-                  sx={{
-                    display: 'flex',
-                    justifyContent: 'center',
-                    gap: '6px',
-                    opacity: 0.7,
-                  }}
-                >
-                  <ThumbUpAltOutlinedIcon />
-                  {parseInt(videoDetail?.statistics?.likeCount).toLocaleString(
-                    'en-US'
-                  )}{' '}
-                </Typography>
-              </Box>
-              <Link to={`/channel/${videoDetail?.snippet?.channelId}`}>
-                <Typography sx={{ fontSize: 20, fontWeight: 700, mx: 2 }}>
-                  {videoDetail?.snippet?.channelTitle}
-                  <CheckCircleIcon sx={{ fontSize: '12px', color: 'gray', ml: '5px' }} />
-                </Typography>
-              </Link>
+                  <Stack
+                    direction='row'
+                    alignItems='center'
+                    gap='10px'
+                    sx={{ opacity: 0.7, fontSize:{md:'16px', xs:'14px'} }}
+                  >
+                    <ThumbUpAltOutlinedIcon />
+                    <span>
+                      {parseInt(
+                        videoDetail?.statistics?.likeCount
+                      ).toLocaleString('en-US')}
+                    </span>
+                  </Stack>
+                </Stack>
+              </Stack>
             </Box>
           </Box>
-          <Box sx={{ mt: 10, }} className='related-videos'>
-            <Box className='related-videos-container' sx={{ mt: 1.3 }}>
-              {!loading ? (
-                data?.map((video) => (
-                  <VideoItem
-                    video={video}
-                    id={(video.id.videoId && video.id.videoId) || video.id}
-                    key={(video.id.videoId && video.id.videoId) || video.id}
-                  />
-                ))
-              ) : (
-                <Loader />
-              )}
-            </Box>
+          <Box px={1} py={{md:1,xs:5}}>
+            <Videos videos={videos} direction='column' />
           </Box>
-        </Box>
+        </Stack>
       )}
     </>
   );

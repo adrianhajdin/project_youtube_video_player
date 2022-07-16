@@ -8,11 +8,12 @@ export const StateContextProvider = ({ children }) => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [results, setResults] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
 
   const fetchData = async (url) => {
     setLoading(true);
     setData([]);
-    
+
     const data = await axios.get(`${BASE_URL}/${url}`, {
       params: {
         maxResults: 50,
@@ -43,7 +44,17 @@ export const StateContextProvider = ({ children }) => {
   };
 
   return (
-    <StateContext.Provider value={{ fetchData, fetchOtherData, results, data, loading }}>
+    <StateContext.Provider
+      value={{
+        fetchData,
+        fetchOtherData,
+        results,
+        data,
+        loading,
+        setSearchTerm,
+        searchTerm,
+      }}
+    >
       {children}
     </StateContext.Provider>
   );

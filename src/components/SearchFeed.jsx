@@ -1,28 +1,30 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { Box } from '@mui/material';
+import React, { useState, useEffect } from 'react';
+import { Typography } from '@mui/material';
+import { useParams } from 'react-router-dom';
 
-import { VideoItem, Loader, ChannelCard } from './';
-import { useStateContext } from '../contexts/StateContextProvider';
+import { Videos } from './';
+import { axiosGetReq } from '../utils';
 
 const SearchFeed = () => {
-  const { data, loading } = useStateContext();
-  
-  if (loading) <Loader />;
+  const [videos, setVideos] = useState(null);
+  const { searchTerm } = useParams();
+
+  useEffect(() => {
+    const fetchVideos = async () => {
+      const data = await axiosGetReq(`search?part=snippet&q=${searchTerm}`);
+      setVideos(data.items);
+    };
+
+    fetchVideos();
+  }, []);
 
   return (
-    <Box sx={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', alignItems: 'center', gap: 2, p: 1, mt: 10 }}>
-      {data.map((item, idx) => (
-        <Box key={idx}>
-          {item?.id?.videoId && <VideoItem video={item} id={item.id.videoId} />}
-          {item?.id?.channelId && (
-            <Link to={`/channel/${item.id.channelId}`}>
-              <ChannelCard channelDetail={item} />
-            </Link>
-          )}
-        </Box>
-      ))}
-    </Box>
+    <>
+      <Typography fontSize={25} fontWeight={900} p={3} textAlign='center'>
+        Search Results for {searchTerm} Videos
+      </Typography>
+      <Videos videos={videos} />
+    </>
   );
 };
 
