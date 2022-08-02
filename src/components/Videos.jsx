@@ -48,7 +48,6 @@ const Videos = ({ videos, direction }) => (
                     'https://i.ytimg.com/vi/7PCkvCPvDXk/hqdefault.jpg'
                   }
                   alt='green iguana'
-                  sx={{ borderRadius: 2 }}
                 />
               </Link>
               <CardContent>
@@ -66,9 +65,9 @@ const Videos = ({ videos, direction }) => (
                 </Link>
                 <Link
                   to={
-                    item?.snippet?.channelId ? 
-                    `/channel/${item.snippet?.channelId}` :
-                    '/channel/UCf3cbfAXgPFL6OywH7JwOzA'
+                    item?.snippet?.channelId
+                      ? `/channel/${item.snippet?.channelId}`
+                      : '/channel/UCf3cbfAXgPFL6OywH7JwOzA'
                   }
                 >
                   <Typography fontSize='14px' fontWeight={500}>

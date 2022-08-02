@@ -11,7 +11,12 @@ import {
 
 const App = () => (
   <Router>
-    <Box sx={{ p: 1, width: { xl: '1370px', md: '100%' }, margin: 'auto' }}>
+    <Box
+      sx={{
+        p: 1,
+        bgcolor: '#000',
+      }}
+    >
       <Navbar />
       <Switch>
         <Route exact path='/' component={Feed} />

@@ -19,7 +19,9 @@ const VideoDetail = () => {
       const data = await axiosGetReq(`videos?part=snippet,statistics&id=${id}`);
       setVideoDetail(data.items[0]);
 
-      const videosData = await axiosGetReq(`search?part=snippet&relatedToVideoId=${id}&type=video`);
+      const videosData = await axiosGetReq(
+        `search?part=snippet&relatedToVideoId=${id}&type=video`
+      );
       setVideos(videosData.items);
     };
 
@@ -39,12 +41,22 @@ const VideoDetail = () => {
                 controls
                 url={`https://www.youtube.com/watch?v=${id}`}
               />
-              <Typography fontSize={18} fontWeight={500} p={1.5}>
+              <Typography color='#fff' fontSize={18} fontWeight={500} p={1.5}>
                 {videoDetail?.snippet?.title}
               </Typography>
-              <Stack direction='row' justifyContent='space-between' gap='40px'>
+              <Stack
+                direction='row'
+                justifyContent='space-between'
+                gap='40px'
+                sx={{ color: '#fff' }}
+              >
                 <Link to={`/channel/${videoDetail?.snippet?.channelId}`}>
-                  <Typography fontSize={{md:20, xs:16}} fontWeight={600} mx={{md:2,xs:0}}>
+                  <Typography
+                    fontSize={{ md: 20, xs: 16 }}
+                    fontWeight={600}
+                    mx={{ md: 2, xs: 0 }}
+                    color='#fff'
+                  >
                     {videoDetail?.snippet?.channelTitle}
                     <CheckCircleIcon
                       sx={{ fontSize: '12px', color: 'gray', ml: '5px' }}
@@ -52,7 +64,9 @@ const VideoDetail = () => {
                   </Typography>
                 </Link>
                 <Stack direction='row' gap='20px' alignItems='center'>
-                  <Typography sx={{ opacity: 0.7, fontSize:{md:'16px', xs:'14px'} }}>
+                  <Typography
+                    sx={{ opacity: 0.7, fontSize: { md: '16px', xs: '14px' } }}
+                  >
                     {parseInt(
                       videoDetail?.statistics?.viewCount
                     ).toLocaleString('en-US')}{' '}
@@ -63,7 +77,7 @@ const VideoDetail = () => {
                     direction='row'
                     alignItems='center'
                     gap='10px'
-                    sx={{ opacity: 0.7, fontSize:{md:'16px', xs:'14px'} }}
+                    sx={{ opacity: 0.7, fontSize: { md: '16px', xs: '14px' } }}
                   >
                     <ThumbUpAltOutlinedIcon />
                     <span>
@@ -76,7 +90,7 @@ const VideoDetail = () => {
               </Stack>
             </Box>
           </Box>
-          <Box px={1} py={{md:1,xs:5}}>
+          <Box px={1} py={{ md: 1, xs: 5 }}>
             <Videos videos={videos} direction='column' />
           </Box>
         </Stack>

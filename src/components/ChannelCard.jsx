@@ -6,14 +6,15 @@ const ChannelCard = ({ channelDetail, mt }) => (
   <Card
     sx={{
       boxShadow: 'none',
-      borderRadius: 0,
+      borderRadius: '20px',
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
       flexDirection: 'column',
-      width: { md: '320px', xs: '350px' },
+      width: { xs: '350px', md: '320px' },
       margin: 'auto',
       mt,
+      background: '#000',
     }}
   >
     <CardMedia
@@ -23,15 +24,14 @@ const ChannelCard = ({ channelDetail, mt }) => (
       alt='channel-img'
       sx={{
         borderRadius: '50%',
-        bg: 'white',
         width: '160px',
         border: '1px solid #e3e3e3',
       }}
     />
-    <CardContent sx={{ textAlign: 'center' }}>
-      <Typography sx={{ fontSize: '15px', fontWeight: 700 }}>
+    <CardContent sx={{ textAlign: 'center', color: '#fff' }}>
+      <Typography sx={{ fontSize: '18px', fontWeight: 700 }}>
         {channelDetail?.snippet?.title}{' '}
-        <CheckCircleIcon sx={{ fontSize: '12px', color: 'gray', ml: '5px' }} />
+        <CheckCircleIcon sx={{ fontSize: '14px', color: 'gray', ml: '5px' }} />
       </Typography>
       {channelDetail?.statistics?.subscriberCount && (
         <Typography sx={{ fontSize: '15px', fontWeight: 500, color: 'gray' }}>

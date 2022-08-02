@@ -20,7 +20,13 @@ const SearchFeed = () => {
 
   return (
     <>
-      <Typography fontSize={25} fontWeight={900} p={3} textAlign='center'>
+      <Typography
+        fontSize={25}
+        fontWeight={900}
+        p={3}
+        textAlign='center'
+        color='white'
+      >
         Search Results for {searchTerm} Videos
       </Typography>
       <Videos videos={videos} />
